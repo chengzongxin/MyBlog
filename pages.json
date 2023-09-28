@@ -98,7 +98,16 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/second/second",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

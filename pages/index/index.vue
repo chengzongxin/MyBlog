@@ -1,75 +1,90 @@
 <template>
 	<view class="content">
 		<feed-content :feeds="dynamicList" @tapImageEvent="tapOneImg" @tapCellEvent="tapOneCell"></feed-content>
+		<uni-load-more :status=" noMore ? 'no-more' : 'loading' "></uni-load-more>
 	</view>
 </template>
 
-<script>
+<script lang="ts">
 	import {
-		onMounted
-	} from "vue"
+		Component,
+		Vue
+	} from 'vue-property-decorator'
 	import {
-		database
-	} from "@/utils/db.js"
-	export default {
-		data() {
-			return {
-				title: 'Hello',
-				dynamicList: null
-			}
-		},
-		async mounted() {
-			this.loadData()
-		},
+		getDynamicList
+	} from "@/utils/dynamicUntil"
+	@Component({})
+	export default class Index extends Vue {
+		page = 1
+		size = 10
+		noMore = false
+		dynamicList = []
+
 		async onLoad() {
 			console.log('index onLoad..')
-			console.log(this.$appName)
-		},
-		methods: {
-			tapOneCell(index, item) {
-				console.log(index, item._id);
-				this.navigateToPublish(item._id)
-			},
-			tapOneImg(current, urls) {
-				uni.previewImage({
-					current,
-					urls
-				})
-			},
-			async loadData(stopRefresh) {
-				const res = await database.dynamicList()
-				console.log("dynamic list res", res.result.data)
-				this.dynamicList = res.result.data
-				if (stopRefresh) {
-					setTimeout(function() {
-						uni.stopPullDownRefresh();
-					}, 1000);
+			this.loadData()
+			// console.log(this.$appName)
+		}
+
+		tapOneCell(index : any, item : any) {
+			console.log(index, item._id);
+			this.navigateToPublish(item._id)
+		}
+		tapOneImg(current : any, urls : any) {
+			uni.previewImage({
+				current,
+				urls
+			})
+		}
+		async loadData(isRefresh ?: boolean, isMore ?: boolean) {
+			if (isRefresh) {
+				this.page = 1
+				this.noMore = false
+			}
+			const res = await getDynamicList(this.page, this.size) as any
+			const newData : [] = res.result.data
+			console.log("dynamic list res", newData)
+			if (this.page !== 1) {
+				if (newData) {
+					this.dynamicList = this.dynamicList.concat(newData)
 				}
-			},
-			onNavigationBarButtonTap(e) {
-				this.navigateToPublish()
-			},
-			navigateToPublish(id) {
-				const url = '/pages/publishDynamic/publishDynamic' + (id ? `?id=${id}` : '')
-				console.log(";url : ", url);
-				uni.navigateTo({
-					url,
-					events: {
-						publish: data => {
-							console.log("get publish data:", data)
-							if (data == true) {
-								this.loadData()
-							}
+			} else {
+				this.dynamicList = newData
+			}
+			this.page++
+			if (isRefresh) {
+				setTimeout(function () {
+					uni.stopPullDownRefresh();
+				}, 1000);
+			}
+			if (isMore) {
+				if (res.result.data.length === 0) this.noMore = true
+			}
+		}
+		onNavigationBarButtonTap(e : any) {
+			this.navigateToPublish()
+		}
+		navigateToPublish(id ?: any) {
+			const url = '/pages/publishDynamic/publishDynamic' + (id ? `?id=${id}` : '')
+			console.log(";url : ", url);
+			uni.navigateTo({
+				url,
+				events: {
+					publish: (data : any) => {
+						console.log("get publish data:", data)
+						if (data == true) {
+							this.loadData()
 						}
 					}
-				})
-			},
-			async onPullDownRefresh() {
-				this.loadData(true)
-			},
-			onReachBottom() {
-				console.log('reach bottom');
-			}
+				}
+			})
+		}
+		async onPullDownRefresh() {
+			this.loadData(true)
+		}
+		onReachBottom() {
+			console.log('reach bottom');
+			this.loadData(false, true)
 		}
 	}
 </script>
