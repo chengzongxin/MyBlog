@@ -20,6 +20,7 @@
 		noMore = false
 		dynamicList = []
 
+		// test
 		async onLoad() {
 			console.log('index onLoad..')
 			this.loadData()
