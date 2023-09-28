@@ -29,7 +29,7 @@
 			},
 			tapCell(index, item) {
 				this.$emit('tapCellEvent', index, item)
-			}
+			},
 		}
 	}
 </script>

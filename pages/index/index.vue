@@ -66,6 +66,9 @@
 			},
 			async onPullDownRefresh() {
 				this.loadData(true)
+			},
+			onReachBottom() {
+				console.log('reach bottom');
 			}
 		}
 	}
