@@ -1,8 +1,8 @@
 <template>
 	<view class="feed-container">
-		<view class="feed-content" v-for="(item,index) in feeds" :key="index" @click="tapCell(index,item)">
-			<text class="feed-title"> {{item.title}}</text>
-			<text class="feed-subtitle"> {{item.content}}</text>
+		<view class="feed-content" v-for="(item,index) in feeds" :key="index">
+			<text class="feed-title" @click="tapCell(index,item)"> {{item.title}}</text>
+			<text class="feed-subtitle" @click="tapCell(index,item)"> {{item.content}}</text>
 			<uni-dateformat class="date" :date=item.create_at_time :threshold="[60000, 3600000]"></uni-dateformat>
 			<grid-image :imgs="item.imgUrls" @tapImage="tapImg"></grid-image>
 
