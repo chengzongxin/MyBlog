@@ -5,7 +5,7 @@
 			<view v-else class="bottomBar">
 				<button type="primary" @click="getUserInfo">更新个人信息</button>
 				<button type="warn" @click="logout">退出</button>
-				<button class="clear" type="warn" @click="clearDynamicList">清理用户动态表</button>
+				<!-- <button class="clear" type="warn" @click="clearDynamicList">清理用户动态表</button> -->
 			</view>
 		</view>
 
