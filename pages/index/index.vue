@@ -1,24 +1,72 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
+		<feed-content :feeds="dynamicList" @tapImageEvent="tapOneImg" @tapCellEvent="tapOneCell"></feed-content>
 	</view>
 </template>
 
 <script>
+	import {
+		onMounted
+	} from "vue"
+	import {
+		database
+	} from "@/utils/db.js"
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				title: 'Hello',
+				dynamicList: null
 			}
 		},
-		onLoad() {
-
+		async mounted() {
+			this.loadData()
+		},
+		async onLoad() {
+			console.log('index onLoad..')
+			console.log(this.$appName)
 		},
 		methods: {
-
+			tapOneCell(index, item) {
+				console.log(index, item._id);
+				this.navigateToPublish(item._id)
+			},
+			tapOneImg(current, urls) {
+				uni.previewImage({
+					current,
+					urls
+				})
+			},
+			async loadData(stopRefresh) {
+				const res = await database.dynamicList()
+				console.log("dynamic list res", res.result.data)
+				this.dynamicList = res.result.data
+				if (stopRefresh) {
+					setTimeout(function() {
+						uni.stopPullDownRefresh();
+					}, 1000);
+				}
+			},
+			onNavigationBarButtonTap(e) {
+				this.navigateToPublish()
+			},
+			navigateToPublish(id) {
+				const url = '/pages/publishDynamic/publishDynamic' + (id ? `?id=${id}` : '')
+				console.log(";url : ", url);
+				uni.navigateTo({
+					url,
+					events: {
+						publish: data => {
+							console.log("get publish data:", data)
+							if (data == true) {
+								this.loadData()
+							}
+						}
+					}
+				})
+			},
+			async onPullDownRefresh() {
+				this.loadData(true)
+			}
 		}
 	}
 </script>
@@ -29,24 +77,5 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
 	}
 </style>
