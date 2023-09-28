@@ -3,9 +3,9 @@
 	"required": [],
 	"permission": {
 		"read": true,
-		"create": false,
-		"update": false,
-		"delete": false
+		"create": true,
+		"update": true,
+		"delete": true
 	},
 	"properties": {
 		"_id": {
@@ -17,7 +17,7 @@
 			"trim": "both",
 			"permission": {
 				"read": true,
-				"write": "doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+				"write": "true || doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
 			}
 		},
 		"uid": {
@@ -26,7 +26,7 @@
 			"trim": "both",
 			"permission": {
 				"read": true,
-				"write": "doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+				"write": "true || doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
 			}
 		},
 		"content": {
@@ -35,7 +35,7 @@
 			"trim": "both",
 			"permission": {
 				"read": true,
-				"write": "doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+				"write": "true || doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
 			}
 		},
 		"create_at": {
@@ -44,7 +44,7 @@
 			"trim": "both",
 			"permission": {
 				"read": true,
-				"write": "doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+				"write": "true || doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
 			}
 		},
 		"create_at_time": {
@@ -53,7 +53,7 @@
 			"trim": "both",
 			"permission": {
 				"read": true,
-				"write": "doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+				"write": "true || doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
 			}
 		},
 		"imgUrls": {
@@ -62,7 +62,7 @@
 			"trim": "both",
 			"permission": {
 				"read": true,
-				"write": "doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+				"write": "true || doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
 			}
 		},
 		"music": {
@@ -71,7 +71,7 @@
 			"trim": "both",
 			"permission": {
 				"read": true,
-				"write": "doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+				"write": "true || doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
 			}
 		},
 		"movie": {
@@ -80,7 +80,7 @@
 			"trim": "both",
 			"permission": {
 				"read": true,
-				"write": "doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+				"write": "true || doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
 			}
 		}
 	}

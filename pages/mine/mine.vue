@@ -4,12 +4,9 @@
 			<view class="avatar">
 				<uni-id-pages-avatar width="100rpx" height="100rpx"></uni-id-pages-avatar>
 			</view>
-			<text class="name" @click="setNickname('')">{{nickname}}</text>
+			<text class="name" @click="setNickname('')">{{ noLogin ? '登录' : nickname}}</text>
+			<navigator class="right" url="/pages/setting/setting">设置</navigator>
 		</view>
-		<!-- <uni-list class="list">
-			<uni-list-item class="item" @click="setNickname('')" title="昵称" :rightText="nickname||'未设置'" link>
-			</uni-list-item>
-		</uni-list> -->
 		<uni-popup ref="dialog" type="dialog">
 			<uni-popup-dialog mode="input" :value="nickname" @confirm="setNickname"
 				:inputType="setNicknameIng?'nickname':'text'" title="设置昵称" placeholder="请输入要设置的昵称">
@@ -50,19 +47,19 @@
 		},
 		async mounted() {
 			this.dynamics = [{
-					title: "11",
+					title: "0",
 					num: "发布"
 				},
 				{
-					title: "22",
+					title: "0",
 					num: "喜欢"
 				},
 				{
-					title: "33",
+					title: "0",
 					num: "收藏"
 				},
 				{
-					title: "44",
+					title: "0",
 					num: "足迹"
 				}
 			]
@@ -75,6 +72,12 @@
 				})
 			},
 			setNickname(nickname) {
+				if (this.noLogin) {
+					uni.navigateTo({
+						url: '/uni_modules/uni-id-pages/pages/login/login-withpwd'
+					})
+					return
+				}
 				if (nickname) {
 					mutations.updateUserInfo({
 						nickname
@@ -91,9 +94,18 @@
 
 <style lang="scss">
 	.user {
+
 		display: flex;
 		align-items: center;
 		height: 100rpx;
+
+		.right {
+			position: absolute;
+			top: 10px;
+			right: 0px;
+			height: 30px;
+			width: 50px;
+		}
 	}
 
 	.avatar {

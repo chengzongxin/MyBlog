@@ -2,6 +2,8 @@
 	<view class="content">
 		<feed-content :feeds="dynamicList" @tapImageEvent="tapOneImg" @tapCellEvent="tapOneCell"></feed-content>
 		<uni-load-more :status=" noMore ? 'no-more' : 'loading' "></uni-load-more>
+		<uni-fab ref="fab" :pattern="pattern" horizontal="right" vertical="bottom" direction="horizontal"
+			@fabClick="onFabClick" />
 	</view>
 </template>
 
@@ -13,20 +15,45 @@
 	import {
 		getDynamicList
 	} from "@/utils/dynamicUntil"
+	import {
+		store
+	} from '@/uni_modules/uni-id-pages/common/store.js'
 	@Component({})
 	export default class Index extends Vue {
 		page = 1
 		size = 10
 		noMore = false
 		dynamicList = []
+		pattern = {
+			color: '#7A7E83',
+			backgroundColor: '#fff',
+			selectedColor: '#007AFF',
+			buttonColor: '#007AFF',
+			iconColor: '#fff'
+		}
 
-		// test
+		get noLogin() {
+			return !store.hasLogin as boolean
+		}
+
 		async onLoad() {
 			console.log('index onLoad..')
 			this.loadData()
 			// console.log(this.$appName)
 		}
-
+		onFabClick() {
+			console.log('onFabClick');
+			console.log(store);
+			if (this.noLogin) {
+				uni.navigateTo({
+					url: '/uni_modules/uni-id-pages/pages/login/login-withpwd'
+				})
+				return
+			}
+			uni.navigateTo({
+				url: "/pages/publish/publish"
+			})
+		}
 		tapOneCell(index : any, item : any) {
 			console.log(index, item._id);
 			this.navigateToPublish(item._id)
@@ -66,7 +93,7 @@
 			this.navigateToPublish()
 		}
 		navigateToPublish(id ?: any) {
-			const url = '/pages/publishDynamic/publishDynamic' + (id ? `?id=${id}` : '')
+			const url = '/pages/publish/publish' + (id ? `?id=${id}` : '')
 			console.log(";url : ", url);
 			uni.navigateTo({
 				url,
