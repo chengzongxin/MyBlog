@@ -1,8 +1,8 @@
 <template>
 	<view>
-		{{title}}
-		{{head}}
-		{{title}}
+		<text class="iconfont icon-align-left"></text>
+		<text class="iconfont icon-align-center"></text>
+		<text class="iconfont icon-align-right"></text>
 	</view>
 </template>
 
@@ -10,8 +10,7 @@
 	import { Component, Vue } from 'vue-property-decorator'
 	@Component({})
 	export default class Second extends Vue {
-		title : string = '1111'
-		head : string = '2222'
+
 	}
 </script>
 
