@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "首页"
 			}
 		}, {
 			"path": "pages/second/second",
@@ -20,24 +20,36 @@
 		}, {
 			"path": "pages/mine/mine",
 			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/setting/setting",
-			"style": {
-				"navigationBarTitleText": "设置",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/publish/publish",
-			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "我的",
 				"enablePullDownRefresh": false
 			}
 		}
 	],
 	"subPackages": [{
+		"root": "pages/subPages",
+		"pages": [{
+				"path": "setting/setting",
+				"style": {
+					"navigationBarTitleText": "设置",
+					"enablePullDownRefresh": false
+				}
+			},
+			{
+				"path": "publish/publish",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+			}, {
+				"path": "publish/publishArtical",
+				"style": {
+					"navigationBarTitleText": "发表文章",
+					"enablePullDownRefresh": false
+				}
+
+			}
+		]
+	}, {
 		"root": "uni_modules/uni-id-pages/pages",
 		"pages": [{
 			"path": "userinfo/deactivate/deactivate",
@@ -134,6 +146,8 @@
 	},
 	"uniIdRouter": {},
 	"tabBar": {
+		"color": "#999",
+		"selectedColor": "red",
 		"list": [{
 				"pagePath": "pages/index/index",
 				"text": "首页",
